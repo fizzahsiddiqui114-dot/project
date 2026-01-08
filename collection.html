@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collections</title>
+
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid mynav">
+    <a class="navbar-brand" href="#">
+      <img src="./images/natural-kitchen-tools-wood-products-background-with-spoon-fork-chopsticks-plate-cutting-board_1154968-15776.jpg"
+           class="img-fluid rounded-5" style="height:80px">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link active" href="collection.html">Collections</a></li>
+        <li class="nav-item"><a class="nav-link" href="comparepage.html">Compare Page</a></li>
+        <li class="nav-item"><a class="nav-link" href="feedback.html">Feedback</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="faqs.html">FAQs</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- SEARCH BAR -->
+<form class="container w-75 my-4 d-flex justify-content-center">
+  <div class="search d-flex align-items-center gap-2 w-50 p-2 border rounded-pill">
+    <i class="bi bi-search"></i>
+    <input id="searchInput" class="form-control border-0" type="text" placeholder="Search products...">
+  </div>
+</form>
+
+<!-- FILTER BUTTONS -->
+<div class="container d-flex flex-wrap justify-content-center mb-4">
+  <button class="btn m-2 filter-btn" data-filter="all">All</button>
+  <button class="btn m-2 filter-btn" data-filter="Non-stick">Non-Stick</button>
+  <button class="btn m-2 filter-btn" data-filter="Stainless Steel">Stainless Steel</button>
+  <button class="btn m-2 filter-btn" data-filter="Plastic">Plastic</button>
+  <button class="btn m-2 filter-btn" data-filter="Silicon">Silicon</button>
+  <button class="btn m-2 filter-btn" data-filter="Kiddy Corner">For Kids</button>
+  <button class="btn m-2 filter-btn" data-filter="Wood">Wood</button>
+</div>
+
+<!-- CARDS -->
+<h2 class="text-center mb-4">OUR COLLECTIONS</h2>
+
+<div class="container" data-aos="fade-up" data-aos-duration="1100">
+  <div class="row row-cols-1 row-cols-md-3 g-4" id="cardsdata"></div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer mt-5 pt-5 pb-3">
+  <h3 class="text-center m-5 fw-bolder">SHINE UTENSILS</h3>
+
+  <div class="container">
+    <div class="row text-center">
+
+      <div class="col-md-4 mb-4">
+        <h4 class="fw-bold">Shine Utensils</h4>
+        <p class="small">
+          Premium utensils crafted for comfort, durability & modern kitchens.
+          Trusted by homes since 2004.
+        </p>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-semibold">Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="home.html" class="footer-link">Home</a></li>
+          <li><a href="about.html" class="footer-link">About</a></li>
+          <li><a href="collection.html" class="footer-link">Collections</a></li>
+          <li><a href="comparepage.html" class="footer-link">Compare</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-semibold">Support</h5>
+        <ul class="list-unstyled">
+          <li><a href="contact.html" class="footer-link">Contact Us</a></li>
+          <li><a href="faqs.html" class="footer-link">FAQs</a></li>
+          <li><a href="feedback.html" class="footer-link">Feedback</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+AOS.init();
+
+const cardsdata = document.getElementById("cardsdata");
+const searchInput = document.getElementById("searchInput");
+const filterButtons = document.querySelectorAll(".filter-btn");
+
+let products = [];
+let activeFilter = "all";
+
+fetch("file.json")
+  .then(res => res.json())
+  .then(data => {
+    products = data;
+    renderProducts(products);
+  });
+
+function renderProducts(list) {
+  if (list.length === 0) {
+    cardsdata.innerHTML = `<h4 class="text-center">No products found</h4>`;
+    return;
+  }
+
+  cardsdata.innerHTML = list.map(item => `
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        ${item.discount ? `<span class="discount-badge">${item.discount}</span>` : ""}
+        <img src="${item.cardImg}" class="card-img" alt="${item.name}">
+        <div class="card-body text-center">
+          <h5 class="card-title">${item.name}</h5>
+          <p class="card-text">${item.description.substring(0, 180)}...</p>
+          <a href="specification.html?id=${item.id}" class="btn">View Details</a>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+searchInput.addEventListener("input", applyFilters);
+
+filterButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    activeFilter = btn.dataset.filter;
+    applyFilters();
+  });
+});
+
+function applyFilters() {
+  const searchText = searchInput.value.toLowerCase();
+
+  const filtered = products.filter(item => {
+    const matchesSearch =
+      item.name.toLowerCase().includes(searchText) ||
+      item.description.toLowerCase().includes(searchText);
+
+    const matchesFilter =
+      activeFilter === "all" ||
+      item.name.toLowerCase() === activeFilter.toLowerCase();
+
+    return matchesSearch && matchesFilter;
+  });
+
+  renderProducts(filtered);
+}
+</script>
+
+</body>
+</html>
