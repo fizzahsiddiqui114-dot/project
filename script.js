@@ -11,7 +11,7 @@ function item1(a) {
     let select2 = document.getElementById("select2").value;
 
     if (a != select2) {
-        document.getElementById("img1").src = products[a - 1].cardImg;
+        document.getElementById("img1").src = "." + products[a - 1].cardImg;
         document.getElementById("price1").innerHTML = products[a - 1].price;
         document.getElementById("description1").innerHTML = products[a - 1].description;
         document.getElementById("brand1").innerHTML = products[a - 1].name;
@@ -29,7 +29,7 @@ function item2(a) {
     let select1 = document.getElementById("select1").value;
 
     if (a != select1) {
-        document.getElementById("img2").src = products[a - 1].cardImg;
+        document.getElementById("img2").src = "." + products[a - 1].cardImg;
         document.getElementById("price2").innerHTML = products[a - 1].price;
         document.getElementById("description2").innerHTML = products[a - 1].description;
         document.getElementById("brand2").innerHTML = products[a - 1].name;
